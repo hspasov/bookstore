@@ -7,10 +7,12 @@
   "license": "MIT",
   "dependencies": {
     "koa": "^2.5.0",
+    "pg": "^7.4.1",
     "semistandard": "^12.0.1"
   },
   "scripts": {
     "start": "semistandard && node index.js",
+    "create-database": "semistandard && PGUSER=postgres PGPASSWORD=postgres PGDATABASE=postgres PGPORT=5432 NEWUSER=bookstore NEWPASSWORD=bookstore NEWDATABASE=bookstore node ./scripts/create-database.js",
     "test": ""
   }
 }
