@@ -1,6 +1,6 @@
 {
   "name": "bookstore",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": "https://github.com/hspasov/bookstore.git",
   "author": "Hristo Spasov <hristo_sp99@abv.bg>",
