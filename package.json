@@ -1,6 +1,6 @@
 {
   "name": "bookstore",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "repository": "https://github.com/hspasov/bookstore.git",
   "author": "Hristo Spasov <hristo_sp99@abv.bg>",
@@ -20,7 +20,7 @@
     "semistandard-loader": "^0.0.4"
   },
   "scripts": {
-    "start": "semistandard && node index.js",
+    "start": "semistandard && PGUSER=bookstore PGDATABASE=bookstore PGPASSWORD=bookstore PGPORT=5432 node app.js",
     "create-database": "semistandard && PGUSER=postgres PGPASSWORD=postgres PGDATABASE=postgres PGPORT=5432 NEWUSER=bookstore NEWPASSWORD=bookstore NEWDATABASE=bookstore node ./scripts/create-database.js",
     "watch": "webpack --mode=development --config webpack.config.js",
     "test": ""
