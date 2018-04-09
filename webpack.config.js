@@ -2,10 +2,14 @@ const path = require('path');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
-  entry: ['./views/index.jsx'],
+  entry: {
+    'index': './views/index.jsx',
+    'login': './views/login.jsx',
+    'register': './views/register.jsx'
+  },
   output: {
     path: path.resolve(__dirname, './public/js'),
-    filename: 'index.js',
+    filename: '[name].js',
     publicPath: '/js'
   },
   module: {

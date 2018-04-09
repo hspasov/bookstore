@@ -1,6 +1,5 @@
 const assert = require('assert');
 const Router = require('koa-router');
-const send = require('koa-send');
 
 const router = new Router({ prefix: '/auth' });
 
@@ -59,10 +58,6 @@ router.post('/login', async (ctx, next) => {
     console.error(error);
     ctx.throw();
   }
-});
-
-router.get('/', async (ctx, next) => {
-  await send(ctx, 'public/html/index.html');
 });
 
 module.exports = router;
