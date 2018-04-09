@@ -201,6 +201,24 @@ superuser.connect().then(() => {
         RETURN user;
       END IF;
     END$$ LANGUAGE plpgsql;`);
+}).then(() => {
+  console.log('Creating function login...');
+  return newUser.query(`CREATE OR REPLACE FUNCTION login (
+    _username VARCHAR(64),
+    _password TEXT
+  ) RETURNS RECORD AS $$
+    DECLARE
+      user RECORD;
+    BEGIN
+      SELECT INTO user username, TRUE from users
+      WHERE users.username = _username AND
+      users.password = crypt(_password, users.password);
+      IF FOUND THEN
+        RETURN user;
+      ELSE
+        RETURN (''::VARCHAR(64), FALSE);
+      END IF;
+    END$$ LANGUAGE plpgsql;`);
 }).then(async () => {
   if (superuser) {
     await superuser.end();
