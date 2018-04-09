@@ -1,7 +1,8 @@
 const Koa = require('koa');
 const logger = require('koa-logger');
-const bodyParser = require('koa-body');
+const bodyParser = require('koa-bodyparser');
 const serve = require('koa-static');
+const session = require('koa-session');
 const { Pool } = require('pg');
 const path = require('path');
 const routes = require('./routes');
@@ -18,6 +19,7 @@ const pool = new Pool({
 });
 
 app.use(logger());
+app.use(session(app));
 app.use(bodyParser());
 app.use(serve(path.join(__dirname, 'public')));
 

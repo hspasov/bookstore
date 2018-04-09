@@ -152,6 +152,55 @@ superuser.connect().then(() => {
     id SERIAL PRIMARY KEY NOT NULL,
     item_id INTEGER NOT NULL REFERENCES items ON DELETE CASCADE,
     file_name VARCHAR(256) NOT NULL);`);
+}).then(() => {
+  console.log('Creating function register...');
+  return newUser.query(`CREATE OR REPLACE FUNCTION register (
+    _username VARCHAR(64),
+    _password TEXT,
+    _country country,
+    _address TEXT,
+    _phone_number VARCHAR(16),
+    _balance NUMERIC(16, 2),
+    _currency currency,
+    _date_of_birth DATE,
+    _image VARCHAR(256)
+  ) RETURNS RECORD AS $$
+    DECLARE
+      user RECORD;
+    BEGIN
+      SELECT INTO user username, created_at, FALSE from users
+      WHERE users.username = _username;
+      IF FOUND THEN
+        RETURN user;
+      ELSE
+        INSERT INTO users (
+          username,
+          password,
+          country,
+          address,
+          phone_number,
+          balance,
+          currency,
+          date_of_birth,
+          image,
+          created_at,
+          updated_at
+        ) VALUES (
+          _username,
+          crypt(_password, gen_salt('bf', 8)),
+          _country,
+          _address,
+          _phone_number,
+          _balance,
+          _currency,
+          _date_of_birth,
+          _image,
+          now(),
+          now()
+        ) RETURNING username, created_at, TRUE INTO user;
+        RETURN user;
+      END IF;
+    END$$ LANGUAGE plpgsql;`);
 }).then(async () => {
   if (superuser) {
     await superuser.end();
