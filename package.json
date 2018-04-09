@@ -1,11 +1,12 @@
 {
   "name": "bookstore",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "index.js",
   "repository": "https://github.com/hspasov/bookstore.git",
   "author": "Hristo Spasov <hristo_sp99@abv.bg>",
   "license": "MIT",
   "dependencies": {
+    "form-urlencoded": "^2.0.4",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-combine-routers": "^3.0.0",
@@ -17,13 +18,13 @@
     "pg": "^7.4.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "semistandard": "^12.0.1",
-    "semistandard-loader": "^0.0.4"
+    "semistandard": "^12.0.1"
   },
   "scripts": {
     "start": "semistandard && PGUSER=bookstore PGDATABASE=bookstore PGPASSWORD=bookstore PGPORT=5432 node app.js",
     "create-database": "semistandard && PGUSER=postgres PGPASSWORD=postgres PGDATABASE=postgres PGPORT=5432 NEWUSER=bookstore NEWPASSWORD=bookstore NEWDATABASE=bookstore node ./scripts/create-database.js",
     "watch": "webpack --mode=development --config webpack.config.js",
+    "build": "webpack --mode=production --config webpack.config.js",
     "test": ""
   },
   "devDependencies": {
