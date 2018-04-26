@@ -13,6 +13,27 @@ function RegisterPage () {
       </label>
       <br />
       <label>
+        Email:
+        <input
+          name='email'
+          type='text' />
+      </label>
+      <br />
+      <label>
+        First name:
+        <input
+          name='firstName'
+          type='text' />
+      </label>
+      <br />
+      <label>
+        Last name:
+        <input
+          name='lastName'
+          type='text' />
+      </label>
+      <br />
+      <label>
         Password:
         <input
           name='password'

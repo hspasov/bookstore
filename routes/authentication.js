@@ -5,20 +5,16 @@ const router = new Router({ prefix: '/auth' });
 
 router.post('/register', async (ctx, next) => {
   // todo: data format validation
-  ctx.assert(ctx.request.body.username, 400);
-  ctx.assert(ctx.request.body.password, 400);
-  ctx.assert(ctx.request.body.country, 400);
-  ctx.assert(ctx.request.body.address, 400);
-  ctx.assert(ctx.request.body.phoneNumber, 400);
-  ctx.assert(ctx.request.body.currency, 400);
-  ctx.assert(ctx.request.body.dateOfBirth, 400);
 
   try {
-    const result = await ctx.db.query(`SELECT username, created_at, success FROM register
-      ($1, $2, $3, $4, $5, 0, $6, $7, NULL)
-      AS (username VARCHAR(64), created_at TIMESTAMP, success BOOLEAN);`,
+    const result = await ctx.db.query(`SELECT username, created_at, success FROM
+      register ($1, $2, $3, $4, $5, $6, $7, $8, 0, $9, $10, NULL)
+      AS (username TEXT, created_at TIMESTAMP, success BOOLEAN);`,
     [
       ctx.request.body.username,
+      ctx.request.body.email,
+      ctx.request.body.firstName,
+      ctx.request.body.lastName,
       ctx.request.body.password,
       ctx.request.body.country,
       ctx.request.body.address,
@@ -40,12 +36,12 @@ router.post('/register', async (ctx, next) => {
 });
 
 router.post('/login', async (ctx, next) => {
-  ctx.assert(ctx.request.body.username, 400);
-  ctx.assert(ctx.request.body.password, 400);
+  // todo: data format validation
 
   try {
-    const result = await ctx.db.query(`SELECT username, success FROM login($1, $2)
-      AS (username VARCHAR(64), success BOOLEAN);`,
+    const result = await ctx.db.query(`SELECT username, success FROM
+      login ($1, $2)
+      AS (username TEXT, success BOOLEAN);`,
     [ctx.request.body.username, ctx.request.body.password]);
 
     assert.strictEqual(typeof (result.rows[0].success), 'boolean', 'property \'success\' returned from login is not boolean');
@@ -56,6 +52,22 @@ router.post('/login', async (ctx, next) => {
     }
   } catch (error) {
     console.error(error);
+    ctx.throw();
+  }
+});
+
+// for testing
+router.get('/users', async (ctx, next) => {
+  try {
+    const result = await ctx.db.query('SELECT * FROM users;');
+    if (result.rows.length > 0) {
+      ctx.status = 200;
+      ctx.body = result.rows;
+    } else {
+      ctx.status = 404;
+    }
+  } catch (error) {
+    console.log(error);
     ctx.throw();
   }
 });
