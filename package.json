@@ -22,6 +22,7 @@
   },
   "scripts": {
     "start": "semistandard && PGUSER=bookstore PGDATABASE=bookstore PGPASSWORD=bookstore PGPORT=5432 node app.js",
+    "admin": "semistandard && PGUSER=bookstore PGDATABASE=bookstore PGPASSWORD=bookstore PGPORT=5432 node app_admin.js",
     "create-database": "semistandard && PGUSER=postgres PGPASSWORD=postgres PGDATABASE=postgres PGPORT=5432 NEWUSER=bookstore NEWPASSWORD=bookstore NEWDATABASE=bookstore node ./scripts/create-database.js",
     "watch": "webpack --mode=development --config webpack.config.js",
     "build": "webpack --mode=production --config webpack.config.js",
